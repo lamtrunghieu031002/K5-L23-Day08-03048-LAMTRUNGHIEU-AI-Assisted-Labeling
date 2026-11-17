@@ -11,9 +11,9 @@
 
 ## Kết quả tóm tắt (điền cuối bài; số lấy từ `submission/qc/*`, kèm mẫu số)
 
-- Máy: accepted / edited / deleted: <<... / ... / ... (mẫu số: ... box máy)>>; added: <<... (mẫu số: ... đối tượng)>>
-- So với gold: precision / recall của **máy** <<... / ...>>
-- Bắt bẫy: <<.../12 = ...%>>
-- Thời gian: gán tay <<... phút/ảnh>>; duyệt có pre-label <<... phút/ảnh>>
+- Máy: accepted / edited / deleted: 515 / 1 / 2 (mẫu số: 518 box máy); added: 0 (mẫu số: 516 đối tượng)
+- So với gold: precision / recall của **máy** 44.6% / 84.6% (mẫu số: 39 đối tượng gold, 4 ảnh)
+- Bắt bẫy: 1/12 = 8.3%
+- Thời gian: gán tay 2.5 phút/ảnh (10 phút / 4 ảnh); duyệt có pre-label 20 phút nhưng chỉ duyệt xong 1/24 ảnh
 - Lỗi QC: <<...% theo ảnh (.../...)>>, <<...% theo đối tượng (.../...)>>
 - **Quyết định:** <<Release / Hold / Rework>> — lý do một dòng: <<...>>
