@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): L23
 - Tài khoản GitHub: lamtrunghieu031002
 - Repo bài nộp (URL): https://github.com/lamtrunghieu031002/K5-L23-Day08-03048-LAMTRUNGHIEU-AI-Assisted-Labeling
-- Commit chốt bài (hash): <<>>
+- Commit chốt bài (hash): 5aaef9d
 - Máy: Ubuntu Linux, không có GPU (chạy CPU), RAM 15 GB
 - CVAT (Docker): v2.81.0 (API báo 2.74.1)
 
