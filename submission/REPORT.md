@@ -34,7 +34,7 @@
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay 2.5 phút/ảnh (10 phút / 4 ảnh) vs duyệt 20 phút nhưng chỉ duyệt xong 1/24 ảnh (img_003), nên không tính được phút/ảnh cho cả lô. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
+- Thời gian (từ `time_log.csv`): gán tay 2.5 phút/ảnh (10 phút / 4 ảnh) vs duyệt 20 phút nhưng chỉ duyệt xong 1/24 ảnh (img_003), nên không tính được phút/ảnh cho cả lô. Thiên lệch (bạn gán gold trước nên đã quen cảnh): (chưa trả lời)
 - Kết luận: có, dựa trên recall máy 84.6% (33/39 đối tượng gold): pre-label giúp không phải vẽ từ đầu.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. Quét ảnh trước: ẩn nhãn máy, đếm vật bằng mắt rồi mới bật nhãn; kiểm được: 24/24 ảnh có ghi số vật đếm tay.
@@ -46,12 +46,12 @@
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| img_003 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | <<>> | `three_wheeler_img_003.jpg` |
-| img_008 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | <<>> | `three_wheeler_img_008.jpg` |
-| img_010 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | <<>> | `three_wheeler_img_010.jpg` |
+| img_003 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | (chưa trả lời) | `three_wheeler_img_003.jpg` |
+| img_008 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | (chưa trả lời) | `three_wheeler_img_008.jpg` |
+| img_010 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | có, gồm người lái | (chưa trả lời) | `three_wheeler_img_010.jpg` |
 
-- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
+- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? (chưa trả lời)
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: (chưa trả lời)
 
 ## 6. Calibration (Part 6)
 
@@ -65,16 +65,16 @@
 - Lỗi theo **đối tượng**: chưa kiểm (0/5 ảnh mẫu được kiểm, 109 đối tượng trong mẫu) · theo **ảnh**: chưa kiểm (ngưỡng Release ≤ 2%). `qc_review.csv` để trống, `qc_report_auto.md` ghi rõ "5 ảnh trong mẫu CHƯA kiểm".
 - Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: không có số: mẫu QC chưa được kiểm (0/5 ảnh).
 - **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): `qc_report_auto.md` tính cận trên 43% với 0 lỗi / 5 ảnh, nhưng con số này không dùng được vì 5 ảnh mẫu chưa được kiểm. Kể cả khi kiểm, 5 ảnh không đủ để chứng minh ngưỡng ≤ 2%.
-- Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): <<>>
+- Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): (chưa trả lời)
 
 **Quyết định: Rework**, ngày 2026-11-17. Lý do (đi theo Hold → Rework → Release): không Hold vì guideline đủ rõ cho lô và dữ liệu không hỏng; Rework vì bắt bẫy 1/12 < 10/12, chỉ duyệt 1/24 ảnh và QC chưa kiểm.
-Nếu Rework / Hold, việc cần làm tiếp: <<>>
+Nếu Rework / Hold, việc cần làm tiếp: (chưa trả lời)
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (Claude) trong VS Code. Việc AI làm: cài môi trường và tải model; chạy các script `prelabel.py`, `threshold_sweep.py`, `merge_prelabels.py`, `inject_traps.py`, `review_stats.py`, `sam2_points.py`, `build_release.py`, `qc_sample.py`, `qc_report.py`; viết `scripts/cvat_create_review_task.py` để tạo Task `batch-review` qua API CVAT; commit / push. **AI đã xem 6 ảnh `viz/` ở Part 2** (gửi ảnh lên dịch vụ AI đám mây, trái RULES nếu chưa được phép) và **viết nháp nhận xét trong `model_log.csv` và mục 1 báo cáo này**. Ở Part 5, AI chọn 3 vật bằng box `three_wheeler` có điểm YOLOE cao nhất (không nhìn ảnh). AI không duyệt nhãn, không điền QC. Ở Part 6, AI gom các ca khó và đưa phương án cho 3 ca calibration; tôi chọn phương án, AI ghi vào `calibration_decisions.csv` và `guideline_v1.1_calibrated.md`. Tôi kiểm tra bằng: <<>>
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (Claude) trong VS Code. Việc AI làm: cài môi trường và tải model; chạy các script `prelabel.py`, `threshold_sweep.py`, `merge_prelabels.py`, `inject_traps.py`, `review_stats.py`, `sam2_points.py`, `build_release.py`, `qc_sample.py`, `qc_report.py`; viết `scripts/cvat_create_review_task.py` để tạo Task `batch-review` qua API CVAT; commit / push. **AI đã xem 6 ảnh `viz/` ở Part 2** (gửi ảnh lên dịch vụ AI đám mây, trái RULES nếu chưa được phép) và **viết nháp nhận xét trong `model_log.csv` và mục 1 báo cáo này**. Ở Part 5, AI chọn 3 vật bằng box `three_wheeler` có điểm YOLOE cao nhất (không nhìn ảnh). AI không duyệt nhãn, không điền QC. Ở Part 6, AI gom các ca khó và đưa phương án cho 3 ca calibration; tôi chọn phương án, AI ghi vào `calibration_decisions.csv` và `guideline_v1.1_calibrated.md`. Tôi kiểm tra bằng: (chưa trả lời)
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? có, như sau: tôi đã xem pre-label (nhãn máy) của ảnh gold trước khi gán xong. Gold bị nhiễm, nên precision / recall của máy trên gold và ngưỡng chọn ở Part 3 có thể lệch về phía máy.
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: Ubuntu Linux, không GPU (CPU), RAM 15 GB; CVAT v2.81.0 bằng Docker Desktop. Thiếu gói `python3-venv` nên tạo venv bằng `virtualenv`. Ổ đĩa chỉ còn ~5 GB trống. Trang cài đặt không tải `yolo26m.pt` mà lab cần, phải tải thêm bằng `download_models.py --set core`.
 - Dùng cache `data/cache/` thay vì tự chạy? không, tự chạy `prelabel.py` trên CPU.
 - Lỗi / bug script đã gặp (nếu có): lần đầu chạy `cvat_create_review_task.py`, Task bị gắn vào Project cũ `project-day2` (thiếu nhãn `motorbike`) nên import lỗi; đã xoá Task đó và tạo Task độc lập với nhãn từ `cvat/labels_generated.json`. Khi duyệt, các lần Save sau 18:04 không tới server CVAT.
-- Một điều bạn làm khác lần sau: <<>>
+- Một điều bạn làm khác lần sau: (chưa trả lời)
