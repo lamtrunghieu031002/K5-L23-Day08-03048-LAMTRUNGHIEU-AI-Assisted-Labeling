@@ -1,1 +1,4 @@
 case_id,image,nguon,van_de,quyet_dinh,quy_tac_ghi_vao_guideline,phien_ban_guideline
+CAL-01,img_002|img_004,loi_may,"YOLO26 không có lớp tuk-tuk: bỏ sót tuk-tuk (img_002) hoặc gọi là car (img_004)","luôn gán three_wheeler cho mọi xe ba bánh; box car/truck của máy trên xe ba bánh phải đổi lớp","mục 2: tuk-tuk, xích lô, ba gác, có mui hay không đều là three_wheeler",v1.1
+CAL-02,img_003,cau_hoi_mo,"Câu mở 6: máy ra nhiều box three_wheeler chồng nhau trên cùng một xe","giữ box khớp xe tốt nhất, xoá các box còn lại, không vẽ lại","mục 4: nhiều box chồng trên một vật thì giữ box tốt nhất và xoá phần trùng",v1.1
+CAL-03,img_018,cau_hoi_mo,"Câu mở 2: khối xe máy đỗ dày gần camera: từng xe hay ignore_region?","xe cao >= 20 px và thấy >= 50% thì vẽ box riêng; phần còn lại gom vào ignore_region","mục 4: cụm xe dày gần camera vẽ từng xe >= 20 px (thấy >= 50%), còn lại ignore_region",v1.1

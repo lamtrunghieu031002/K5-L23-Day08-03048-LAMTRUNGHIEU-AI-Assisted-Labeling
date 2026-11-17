@@ -54,7 +54,7 @@
 
 ## 6. Calibration (Part 6)
 
-- Số quyết định: <<>> (`calibration_decisions.csv`); quan trọng nhất (dẫn `CAL-xx`): <<>>
+- Số quyết định: 3 (`calibration_decisions.csv`: CAL-01 `loi_may`, CAL-02 và CAL-03 `cau_hoi_mo`); quan trọng nhất (dẫn `CAL-xx`): <<>>
 - Quy tắc mới đã vào `guideline_v1.1_calibrated.md`: <<>>
 - Nguyên nhân gốc: <<guideline mơ hồ / chưa nắm quy tắc / máy>>
 
@@ -71,7 +71,7 @@ Nếu Rework / Hold, việc cần làm tiếp: <<>>
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (Claude) trong VS Code. Việc AI làm: cài môi trường và tải model; chạy các script `prelabel.py`, `threshold_sweep.py`, `merge_prelabels.py`, `inject_traps.py`, `review_stats.py`, `sam2_points.py`, `build_release.py`, `qc_sample.py`, `qc_report.py`; viết `scripts/cvat_create_review_task.py` để tạo Task `batch-review` qua API CVAT; commit / push. **AI đã xem 6 ảnh `viz/` ở Part 2** (gửi ảnh lên dịch vụ AI đám mây, trái RULES nếu chưa được phép) và **viết nháp nhận xét trong `model_log.csv` và mục 1 báo cáo này**. Ở Part 5, AI chọn 3 vật bằng box `three_wheeler` có điểm YOLOE cao nhất (không nhìn ảnh). AI không duyệt nhãn, không điền QC. Tôi kiểm tra bằng: <<>>
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (Claude) trong VS Code. Việc AI làm: cài môi trường và tải model; chạy các script `prelabel.py`, `threshold_sweep.py`, `merge_prelabels.py`, `inject_traps.py`, `review_stats.py`, `sam2_points.py`, `build_release.py`, `qc_sample.py`, `qc_report.py`; viết `scripts/cvat_create_review_task.py` để tạo Task `batch-review` qua API CVAT; commit / push. **AI đã xem 6 ảnh `viz/` ở Part 2** (gửi ảnh lên dịch vụ AI đám mây, trái RULES nếu chưa được phép) và **viết nháp nhận xét trong `model_log.csv` và mục 1 báo cáo này**. Ở Part 5, AI chọn 3 vật bằng box `three_wheeler` có điểm YOLOE cao nhất (không nhìn ảnh). AI không duyệt nhãn, không điền QC. Ở Part 6, AI gom các ca khó và đưa phương án cho 3 ca calibration; tôi chọn phương án, AI ghi vào `calibration_decisions.csv` và `guideline_v1.1_calibrated.md`. Tôi kiểm tra bằng: <<>>
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? <<không / có, như sau: ...>>
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: Ubuntu Linux, không GPU (CPU), RAM 15 GB; CVAT v2.81.0 bằng Docker Desktop. Thiếu gói `python3-venv` nên tạo venv bằng `virtualenv`. Ổ đĩa chỉ còn ~5 GB trống. Trang cài đặt không tải `yolo26m.pt` mà lab cần, phải tải thêm bằng `download_models.py --set core`.
 - Dùng cache `data/cache/` thay vì tự chạy? không, tự chạy `prelabel.py` trên CPU.
