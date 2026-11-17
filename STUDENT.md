@@ -15,5 +15,5 @@
 - So với gold: precision / recall của **máy** 44.6% / 84.6% (mẫu số: 39 đối tượng gold, 4 ảnh)
 - Bắt bẫy: 1/12 = 8.3%
 - Thời gian: gán tay 2.5 phút/ảnh (10 phút / 4 ảnh); duyệt có pre-label 20 phút nhưng chỉ duyệt xong 1/24 ảnh
-- Lỗi QC: <<...% theo ảnh (.../...)>>, <<...% theo đối tượng (.../...)>>
-- **Quyết định:** <<Release / Hold / Rework>> — lý do một dòng: <<...>>
+- Lỗi QC: chưa kiểm (0/5 ảnh mẫu), không có số
+- **Quyết định:** Rework — lý do một dòng: bắt bẫy 1/12 < 10/12, chỉ duyệt 1/24 ảnh, QC chưa kiểm
