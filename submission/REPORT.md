@@ -19,22 +19,22 @@
 
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted | <<>> | <<>> | <<box máy>> |
-| edited | <<>> | <<>> | <<>> |
-| deleted | <<>> | <<>> | <<>> |
-| added | <<>> | <<>> | <<đối tượng sau duyệt>> |
+| accepted | 515 | 99.4% | 518 box máy |
+| edited | 1 | 0.2% | 518 box máy |
+| deleted | 2 | 0.4% | 518 box máy |
+| added | 0 | 0.0% | 516 đối tượng sau duyệt |
 
 - Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? <<>>
-- So với gold: precision / recall của **máy** <<>> (mẫu số: <<đối tượng gold>>)
+- So với gold: precision / recall của **máy** 44.6% (KTC 95%: 34–56%) / 84.6% (KTC 95%: 70–93%); TP 33, FP 41, FN 6 (mẫu số: 39 đối tượng gold, 4 ảnh; nguồn `qc/review_stats.md`)
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: <<.../12>>; loại nào lọt: <<>>; vì sao (bạn đã bỏ bước nào của checklist)? <<>>
+- Bắt bẫy: 1/12 = 8.3% (KTC 95%: 1–35%); loại nào lọt: wrong_class 3/3, missing 3/3, loose 3/3, extra 2/3 (bắt được 1 bẫy extra); vì sao (bạn đã bỏ bước nào của checklist)? <<>>
 - Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? <<>>
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay <<... phút/ảnh>> vs duyệt <<... phút/ảnh>>. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
+- Thời gian (từ `time_log.csv`): gán tay 2.5 phút/ảnh (10 phút / 4 ảnh) vs duyệt 20 phút nhưng chỉ duyệt xong 1/24 ảnh (img_003), nên không tính được phút/ảnh cho cả lô. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
 - Kết luận: <<có / không / chỉ cho lớp nào>>, dựa trên <<số liệu>>
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. <<>>
@@ -45,7 +45,9 @@
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| <<img_0xx>> | <<>> | <<>> | <<>> | <<>> | <<>> |
+| img_003 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | <<>> | <<>> | `three_wheeler_img_003.jpg` |
+| img_008 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | <<>> | <<>> | `three_wheeler_img_008.jpg` |
+| img_010 | SAM 2.1 base (`sam2.1_b.pt`) | 1 click dương + box YOLOE | <<>> | <<>> | `three_wheeler_img_010.jpg` |
 
 - Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
 - *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
@@ -58,8 +60,8 @@
 
 ## 7. QC và quyết định (Part 6)
 
-- Mẫu: <<n>> ảnh (<<m>> ảnh `can_review` + <<k>> ngẫu nhiên, seed 42); người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
-- Lỗi theo **đối tượng**: <<.../... = ...%>> · theo **ảnh**: <<.../... = ...%>> (ngưỡng Release ≤ 2%)
+- Mẫu: 5 ảnh (0 ảnh `can_review` + 5 ngẫu nhiên, seed 42: img_003, img_006, img_014, img_031, img_035); người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
+- Lỗi theo **đối tượng**: chưa kiểm (0/5 ảnh mẫu được kiểm, 109 đối tượng trong mẫu) · theo **ảnh**: chưa kiểm (ngưỡng Release ≤ 2%). `qc_review.csv` để trống, `qc_report_auto.md` ghi rõ "5 ảnh trong mẫu CHƯA kiểm".
 - Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: <<>>
 - **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): <<>>
 - Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): <<>>
@@ -69,9 +71,9 @@ Nếu Rework / Hold, việc cần làm tiếp: <<>>
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): <<>>
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (Claude) trong VS Code. Việc AI làm: cài môi trường và tải model; chạy các script `prelabel.py`, `threshold_sweep.py`, `merge_prelabels.py`, `inject_traps.py`, `review_stats.py`, `sam2_points.py`, `build_release.py`, `qc_sample.py`, `qc_report.py`; viết `scripts/cvat_create_review_task.py` để tạo Task `batch-review` qua API CVAT; commit / push. **AI đã xem 6 ảnh `viz/` ở Part 2** (gửi ảnh lên dịch vụ AI đám mây, trái RULES nếu chưa được phép) và **viết nháp nhận xét trong `model_log.csv` và mục 1 báo cáo này**. Ở Part 5, AI chọn 3 vật bằng box `three_wheeler` có điểm YOLOE cao nhất (không nhìn ảnh). AI không duyệt nhãn, không điền QC. Tôi kiểm tra bằng: <<>>
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? <<không / có, như sau: ...>>
-- Máy / GPU / CVAT dùng; vướng mắc cài đặt: <<>>
-- Dùng cache `data/cache/` thay vì tự chạy? <<không / có, vì ...>>
+- Máy / GPU / CVAT dùng; vướng mắc cài đặt: Ubuntu Linux, không GPU (CPU), RAM 15 GB; CVAT v2.81.0 bằng Docker Desktop. Thiếu gói `python3-venv` nên tạo venv bằng `virtualenv`. Ổ đĩa chỉ còn ~5 GB trống. Trang cài đặt không tải `yolo26m.pt` mà lab cần, phải tải thêm bằng `download_models.py --set core`.
+- Dùng cache `data/cache/` thay vì tự chạy? không, tự chạy `prelabel.py` trên CPU.
 - Lỗi / bug script đã gặp (nếu có): <<>>
 - Một điều bạn làm khác lần sau: <<>>
