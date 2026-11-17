@@ -6,14 +6,14 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person / bicycle / motorbike / car / bus / truck | YOLO26m | mặc định 0.3 cho cả 6 lớp (`--conf 0.3`) | r01/r02: 0.5 làm mất nhiều person/motorbike nhỏ (person 131 -> 87 box trên pilot). Sweep: person, motorbike, car không ngưỡng nào <= 0.5 đạt recall 90% (tối đa 83% / 88% / 83%), và ở 0.3 recall bằng 0.15 nhưng ít FP hơn (person FP 20 so với 32; motorbike 6 so với 16). bicycle (1 vật), bus và truck (0 vật) quá ít mẫu gold nên không chọn ngưỡng riêng |
+| three_wheeler | YOLOE-26s, prompt: `three_wheeler` | 0.15 (`--thr "three_wheeler=0.15"`) | r03: YOLOE tìm được tuk-tuk và xích lô mà YOLO26 bỏ sót hoặc gọi là car (r01, r04). Sweep: 0.15 cho recall 100% (6/6 vật gold), precision 67% (6/9); 0.3 tụt còn recall 67% (4/6) |
 
 - Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
-- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
-- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
-- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
-- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
+- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: SAM 2.1 base (`sam2.1_b.pt`, r04). Mask bám sát người và thân tuk-tuk khi box đúng; chạy được trên CPU, RAM 15 GB (5.9 s/ảnh), không cần token HuggingFace như SAM 3.
+- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? YOLO26 không có lớp tuk-tuk: ở img_002 tuk-tuk xanh bị bỏ sót hoàn toàn, ở img_004 tuk-tuk bị gọi `car` (0.37, 0.34). Hạ hay nâng ngưỡng đều không đổi được nhãn. Sửa bằng cách thêm YOLOE cho `three_wheeler` và khi ghép (`merge_prelabels.py`, IoU >= 0.6) cho `three_wheeler` thắng `car`/`truck`.
+- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): điểm thấp mà đúng: img_011, xe 3 bánh bị cắt ở mép trái chỉ 0.28 (YOLOE). Điểm khá mà sai: img_002, YOLOE gọi xe máy/xe đẩy là three_wheeler (0.40) và gọi pickup là three_wheeler (0.37), trong khi YOLO26 đã ra pickup là truck 0.73.
+- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: ngưỡng 0.15 của three_wheeler chỉ dựa trên 6 vật trong 4 ảnh, chọn và chấm trên cùng dữ liệu; bus/truck không có vật nào trong gold nên không đo được. Cần kiểm chứng lại trên 24 ảnh batch ở Part 4.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
 
